@@ -1,6 +1,5 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const HttpError = require("../models/http-error");
 const User = require('../models/user');
 const Admin = require('../models/admin');
 
@@ -31,6 +30,7 @@ const login = async (req, res, next) => {
       const error = new HttpError('Logging fail please try again.', 500);
       return next(error);
     }
+
   
     if (!existingUser) {
       const error = new HttpError(
@@ -39,16 +39,9 @@ const login = async (req, res, next) => {
       );
       return next(error);
     }
-  
-    let isValidPassword = false;
-    try {
-      isValidPassword = await bcrypt.compare(password, existingUser.password);
-    } catch (err) {
-      const error = new HttpError('Logging fail please try again.', 500);
-      return next(error);
-    }
-  
-    if (!isValidPassword) {
+    
+
+    if (!password === existingUser.password) {
       const error = new HttpError(
         'Invalid credentials, could not log you in.',
         500
