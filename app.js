@@ -1,37 +1,38 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const cors = require("cors");
 
-const adminsRoutes = require('./routes/admins-routes');
+const adminsRoutes = require("./routes/admins-routes");
+const { verifyAPI } = require("./middleware/check-auth");
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use(cors());
-app.use('/api/admins', adminsRoutes);
+app.use("/api/", verifyAPI);
 
 app.use((req, res, next) => {
-  const error = new HttpError('Could not find this route.', 404);
-  throw error;
+	const error = new HttpError("Could not find this route.", 404);
+	throw error;
 });
 
 app.use((error, req, res, next) => {
-    if (res.headerSent) {
-      return next(error);
-    }
-    res.status(error.code || 500);
-    res.json({ message: error.message || 'An unknown error occurred!' });
-  });
+	if (res.headerSent) {
+		return next(error);
+	}
+	res.status(error.code || 500);
+	res.json({ message: error.message || "An unknown error occurred!" });
+});
 
 mongoose
-  .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.9hjdt.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-  )
-  .then(() => {
-    app.listen(process.env.PORT || 5001);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+	.connect(
+		`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.9hjdt.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+	)
+	.then(() => {
+		app.listen(process.env.PORT || 5001);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
