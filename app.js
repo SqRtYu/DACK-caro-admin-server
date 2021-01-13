@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors());
-app.use(verifyAPI);
+// app.use(verifyAPI);
 
 app.use("/api/admins", adminsRoutes);
 app.use("/api/users", usersRoutes);
@@ -38,7 +38,7 @@ mongoose
 		{ useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
 	)
 	.then(() => {
-		app.listen(process.env.PORT || 5001);
+		app.listen(process.env.PORT || 5001, () => console.log("Server on"));
 	})
 	.catch((err) => {
 		console.log(err);
