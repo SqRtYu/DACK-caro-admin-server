@@ -5,6 +5,7 @@ const router = express.Router();
 
 
 router.get("/getall/", gamesControllers.getAll);
+
 router.get("/:sub", gamesControllers.getGameByUser);
 
 module.exports = router;

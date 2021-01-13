@@ -78,6 +78,26 @@ const unlockUser = async (req, res, next) => {
   res.status(200).json({ user: user.toObject({ getters: true }) });
 };
 
+const getUserBySub = async (req, res, next) => {
+  console.log("getUserBySub");
+  const sub = req.params.sub;
+
+  let user;
+
+  try {
+    user = await User.findOne({ sub });
+  } catch (err) {
+    const error = new HttpError(
+      "Some thing went wrong, could not find user.",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ user: user.toObject({ getters: true }) });
+};
+
 exports.getAll = getAll;
+exports.getUserBySub = getUserBySub;
 exports.lockUser = lockUser;
 exports.unlockUser = unlockUser;
