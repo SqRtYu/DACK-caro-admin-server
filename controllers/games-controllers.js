@@ -56,7 +56,7 @@ const getGameById = async (req, res, next) => {
 		return next(error);
 	}
 
-	res.json(game.toObject({ getters: true }));
+	res.json(game ? game.toObject({ getters: true }) : game);
 };
 
 exports.getGameByUser = getGameByUser;
