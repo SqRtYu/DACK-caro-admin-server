@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors());
-// app.use(verifyAPI);
+app.use(verifyAPI);
 
 app.use("/api/admins", adminsRoutes);
 app.use("/api/users", usersRoutes);
