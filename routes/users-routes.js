@@ -7,8 +7,8 @@ router.get("/getall", usersControllers.getAll);
 
 router.get("/:sub", usersControllers.getUserBySub);
 
-router.post("/lock/:sub", usersControllers.lockUser);
+router.post("/lock", usersControllers.lockUser);
 
-router.post("/unlock/:sub", usersControllers.unlockUser);
+router.post("/unlock", usersControllers.unlockUser);
 
 module.exports = router;

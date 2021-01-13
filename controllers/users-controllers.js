@@ -19,7 +19,7 @@ const getAll = async (req, res, next) => {
 };
 
 const lockUser = async (req, res, next) => {
-  const sub = req.params.sub;
+  const { sub } = req.body;
 
   let user;
 
@@ -49,7 +49,7 @@ const lockUser = async (req, res, next) => {
 };
 
 const unlockUser = async (req, res, next) => {
-  const sub = req.params.sub;
+  const { sub } = req.body;
 
   let user;
 
